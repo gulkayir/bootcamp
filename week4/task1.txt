@@ -1,0 +1,45 @@
+from bs4 import BeautifulSoup
+import requests
+html_text = requests.get('http://www.example.com/').text
+
+soup = BeautifulSoup(html_text, 'lxml')
+a = soup.find("a").get('href')
+p = soup.find('p').text
+h1 = soup.find('h1').text
+print(f'h1: {h1}')
+print(f'p: {p}')
+print(f'a: {a}')
+
+import requests
+from bs4 import BeautifulSoup
+
+page = requests.get('https://www.wikipedia.org/').text
+soup = BeautifulSoup(page, 'lxml')
+names = soup.find('div', class_='central-featured-lang lang4').text
+print(names)
+
+
+
+task4
+
+import requests
+from bs4 import BeautifulSoup
+
+def getTitle(url):
+    htext = requests.get(url).text
+    soup = BeautifulSoup(htext, 'lxml')
+    if soup.find('h1'):
+        h1 = soup.find('h1')
+        return h1
+    else:
+        return "Title could not be found"
+print(getTitle('http://www.example.com/'))
+
+
+import requests
+from bs4 import BeautifulSoup
+
+r = requests.get('https://www.makers.kg/')
+soup = BeautifulSoup(r.text,'lxml')
+
+images = soup.find_all('img', class_='feature-cards-card-image')

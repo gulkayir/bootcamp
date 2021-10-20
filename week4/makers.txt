@@ -1,0 +1,4 @@
+Annie 50 3
+Tae 70 5
+Jennie 90 10
+Bambam 85 7

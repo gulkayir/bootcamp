@@ -1,0 +1,11 @@
+jannat@mail.ru
+atai@mail.ru
+/bin/python3 /home/gulkayir/Makers/week4/file.py
+/bin/python3 /home/gulkayir/Makers/week4/file.py
+atai@mail.ru
+/bin/python3 /home/gulkayir/Makers/week4/file.py
+atai@mail.ru
+/bin/python3 /home/gulkayir/Makers/week4/file.py
+atai@mail.ru
+jannat@mail.ru
+atai@mail.ru

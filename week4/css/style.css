@@ -1,0 +1,25 @@
+*{
+    background-color:wheat;
+}
+
+.inp_1{
+    font-size: 30px;
+    font-weight: bold;
+    color: teal;
+    background-color:paleturquoise;
+}
+
+.text{
+    background-color:plum;
+    color: steelblue;
+    width: 700px;
+}
+
+#input1{
+    background-color:lightsalmon;
+}
+
+.nav_list{
+    background-color: #fff;
+    
+}

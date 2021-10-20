@@ -1,0 +1,93 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    background-color: #fbd1a2;
+    height: 100vh;
+    /* justify-content: flex-end; */
+    /* justify-content: space-evenly; */
+    /* flex-direction: row-reverse; */
+    align-items: center;
+    justify-content: center;
+
+}
+
+
+
+
+
+.blocks {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+    width: 200px;
+    height: 200px;
+    background-color: #00b4d8;
+    color: white;
+    font-size: 18px;
+    text-align: center;
+    margin: 15px;
+
+}
+
+#block3 {
+    /* order: -1; */
+    border-radius: 30px;
+    transition-property: background-color, border-radius;
+    transition-duration: 2s;
+    transition-timing-function: cubic-bezier(1,.96,0,.76);
+}
+
+#block3:hover {
+    background-color: blueviolet;
+    border-radius: 30px;
+}
+
+
+/* .blocks:last-child {
+} */
+
+.blocks:nth-child(2) {
+    animation-name: changeColor;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes changeColor {
+    0% {
+        background-color: darkseagreen;
+    }
+    30% {
+        background-color: lightpink;
+        border-radius: 30%;
+    }
+    60% {
+        background-color: silver;
+        border-radius: 30%;
+    }
+    100% {
+        background-color: lightseagreen;
+
+    }
+}
+
+.blocks:first-child {
+    animation-name: switch;
+    animation-duration: 3s;
+}
+
+@keyframes switch {
+    0% 
+    {
+        order: 0;
+    }
+    50% {
+        order: 1;
+    }
+    
+}
