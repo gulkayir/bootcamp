@@ -1,0 +1,100 @@
+select * from cd.facilities;
+select name, membercost from cd.facilities
+select * from cd.facilities where membercost <>0;
+select  facid,name, membercost,monthlymaintenance from cd.facilities where membercost>0 and membercost<monthlymaintenance/50;
+select * from cd.facilities where name ilike '%Tennis%';
+select * from cd.facilities where facid=1 or facid=5;
+select name,case when monthlymaintenance<= 100 then 'cheap'  when monthlymaintenance>100 then 'expensive' end as cost from cd.facilities 
+select memid, surname, firstname , joindate from cd.members where joindate>'2012-09-01';
+select distinct surname from cd.members order by surname fetch first 10 rows only;
+select surname from cd.members union select name from cd.facilities;
+select max(joindate) from cd.members;
+SELECT firstname, surname, joindate FROM cd.members WHERE joindate = (SELECT MAX(joindate) FROM cd.members)
+
+
+
+select s.starttime from cd.bookings as s inner join cd.members as m on s.memid=m.memid where m.firstname='David' and m.surname='Farrell';
+
+select b.starttime, f.name from cd.bookings as b inner join cd.facilities as f 
+on b.facid=f.facid where name ilike '%Tennis Court%' and starttime>='2012-09-21' and starttime <'2012-09-22'  order by starttime;
+
+SELECT DISTINCT m.firstname, m.surname
+FROM cd.members AS m2
+INNER JOIN cd.members AS m ON (m.memid = m2.recommendedby)
+ORDER BY m.surname, m.firstname;
+
+select m.firstname, m.surname, mem.firstname, mem.surname from cd.members as m 
+left outer join cd.members as mem on m.recommendedby=mem.memid
+order by m.surname, m.firstname;
+
+select distinct m.firstname||' '|| m.surname as member, f.name as facility from cd.members as m inner join cd.bookings as b on m.memid=b.memid inner join cd.facilities as f on b.facid=f.facid where f.name ilike 'Tennis Court%'order by member,facility ; 
+
+
+SELECT m.firstname ||' '|| m.surname AS member,
+       f.name AS facility,
+(CASE WHEN m.memid =0 THEN f.guestcost * b.slots
+        ELSE f.membercost * b.slots END) AS cost
+FROM cd.members AS m
+INNER JOIN cd.bookings AS b ON (m.memid = b.memid)
+INNER JOIN cd.facilities AS f ON (b.facid = f.facid)
+WHERE (date_trunc('day', b.starttime)='2012-09-14') AND
+((m.memid =0 AND b.slots * f.guestcost >30) OR
+(m.memid >0 AND b.slots * f.membercost >30))
+ORDER BY cost DESC;
+
+
+SELECT DISTINCT m.firstname ||' '|| m.surname AS member,
+(SELECT r.firstname ||' '|| r.surname
+    FROM cd.members AS r
+    WHERE m.recommendedby = r.memid) AS recommended
+FROM cd.members AS m ORDER BY member;
+
+
+SELECT member, facility, cost from(
+  SELECT
+  m.firstname ||' '|| m.surname as member,
+  f.name as facility,
+  CASE WHEN m.memid =0 THEN b.slots * f.guestcost
+  ELSE b.slots * f.membercost END AS cost
+  FROM cd.members AS m
+  INNER JOIN cd.bookings AS b ON m.memid = b.memid
+  INNER JOIN cd.facilities AS f ON b.facid = f.facid
+  WHERE date_trunc('day', b.starttime)='2012-09-14'
+)as bookings
+WHERE cost >30
+ORDER BY cost DESC;
+
+
+insert into cd.facilities values(9, 'Spa',  20,30,100000,800)
+
+insert into cd.facilities values
+(9,'Spa',20,30, 100000,  800),
+(10,'Squash Court 2', 3.5,17.5,  5000, 80)
+
+into cd.facilities
+(facid, name, membercost, guestcost, initialoutlay, monthlymaintenance)
+values
+( (select max(facid) from cd.facilities) + 1, 'Spa', 20, 30, 100000, 800);
+
+update cd.facilities
+set 
+initialoutlay = 10000
+where name = 'Tennis Court 2';
+
+update cd.facilities
+    set
+        membercost = 6,
+        guestcost = 30
+    where facid in (0,1);   
+
+update cd.facilities facs
+    set
+        membercost = (select membercost * 1.1 from cd.facilities where facid = 0),
+        guestcost = (select guestcost * 1.1 from cd.facilities where facid = 0)
+    where facs.facid = 1;          
+
+delete from cd.bookings;    
+
+delete from cd.members where memid = 37
+
+delete from cd.members where memid not in (select memid from cd.bookings)

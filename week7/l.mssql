@@ -1,0 +1,28 @@
+select plaintext from wordform where plaintext ilike 'a%';
+select title from work where genretype='p';
+select avg(totalparagraphs) from work where genretype='t';
+
+
+select  c.charname, c.speechcount, w.title, w.year,w.genretype from character 
+as c inner join character_work as cw on c.charid=cw.charid inner join 
+work as w on w.workid=cw.workid where c.speechcount>=200 order by w.year desc;
+
+select c.charname, count(w.title) from character as c inner join character_work
+as cw on c.charid=cw.charid inner join work as w on w.workid=cw.workid group by 
+c.charname order by count(w.title) desc limit 2;
+
+select c.chapterid, 
+c.description, w.title from chapter as c inner
+ join work as w on c.workid=w.workid;
+
+ select p.paragraphnum, w.title, w.year from paragraph 
+ as p inner join work as w on p.workid=w.workid;
+
+#6
+ select c.charname, c.speechcount , w.title from character as c
+  inner join character_work as cw on c.charid=cw.charid inner join 
+  work as w on cw.workid=w.workid;
+
+#8
+select section, sum(wordcount) from paragraph group by section;
+
